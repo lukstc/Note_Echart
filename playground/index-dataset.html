@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="='utf-8" />
+        <!-- import src file -->
+        <script src="echarts.js"></script>
+    </head>
+    <body>
+        <!-- define height and width -->
+        <div id="main"></div>
+        <style>
+            #main,
+            html,
+            body {
+              width: 100%;
+            }
+            #main {
+              height: 400px;
+            }
+        </style>
+        <script type="text/javascript">
+            var myChart = echarts.init(document.getElementById('main'),'dark');
+                
+            window.onresize = function() {
+                myChart.resize();
+            }
+
+            var option = {
+                title: {text:'Echart Playground'},
+                legend:{},
+                tooltip:{},
+                dataset:{
+                    source:[
+                        ['product','2015','2016','2017'],
+                        ['Matcha Latte', 43.3, 85.8, 93.7],
+                        ['Milk Tea', 83.1, 73.4, 55.1],
+                        ['Cheese Cocoa', 86.4, 65.2, 82.5],
+                        ['Walnut Brownie', 72.4, 53.9, 39.1]
+                    ]
+                },
+                // 声明x轴，默认情况对应到dataset第一列
+                xAxis:{ type:"category"},
+                // 声明y轴距，默认数值轴
+                yAxis: {},
+                // declare multi bar series，by default will map to each col in dataset (except first row)
+                series:[
+                    {type:'bar'},{type:'bar'},{type:'bar'}
+                ]
+            };
+
+            myChart.setOption(option)
+
+        </script>
+
+        <div id="main2" style="width:100%;height:400px;"></div>
+        <script type="text/javascript">
+            var myChart2 = echarts.init(document.getElementById('main2'),'dark');
+                
+            window.onresize = function() {
+                myChart2.resize();
+            }
+
+            var option = {
+                title: {text:'Echart Playground'},
+                legend:{},
+                tooltip:{},
+                dataset:{
+                    // 用 dimensions 指定了维度的顺序。直角坐标系中，如果 X 轴 type 为 category，
+                    // 默认把第一个维度映射到 X 轴上，后面维度映射到 Y 轴上。
+                    // 如果不指定 dimensions，也可以通过指定 series.encode
+                    dimensions:['product','2015','2016','2017'],
+                    source:[
+                        {'product':'Matcha Latte','2015':123,'2016':321,'2017':456},
+                        {'product':'Milk Tea','2015':231,'2016':123,'2017':423},
+                        {'product':'Cheese Cocoa','2015':222,'2016':333,'2017':342},
+                        {'product':'Walnut Brownie','2015':231,'2016':132,'2017':312},
+                    ]
+                },
+                // 声明x轴，默认情况对应到dataset第一列
+                xAxis:{ type:"category"},
+                // 声明y轴距，默认数值轴
+                yAxis: {},
+                // declare multi bar series，by default will map to each col in dataset (except first row)
+                series:[
+                    {type:'bar'},{type:'bar'},{type:'bar'}
+                ]
+            };
+
+            myChart2.setOption(option)
+
+        </script>
+
+        <div id="main3" style="width:100%;height:400px;"></div>
+        <script type="text/javascript">
+            var myChart3 = echarts.init(document.getElementById('main3'),'dark');
+                
+            window.onresize = function() {
+                myChart3.resize();
+            }
+
+            var option = {
+                title: {text:'Echart Playground'},
+                legend:{},
+                tooltip:{},
+                dataset:{
+                    source:[
+                        ['product', '2012', '2013', '2014', '2015'],
+                        ['Matcha Latte', 41.1, 30.4, 65.1, 53.3],
+                        ['Milk Tea', 86.5, 92.1, 85.7, 83.1],
+                        ['Cheese Cocoa', 24.1, 67.2, 79.5, 86.4]
+                    ]
+                },
+                
+                xAxis:[
+                    {type:"category",gridIndex:0},
+                    {type:"category",gridIndex:1}
+                ],
+
+                yAxis:[
+                    {gridIndex:0},
+                    {gridIndex:1}
+                ],
+
+                grid:[{right:"55%"},{left:"55%"}],
+                // left right 分别表示距离left和right
+
+                // declare multi bar series，by default will map to each col in dataset (except first row)
+                series:[
+                        // 这几个系列会出现在第一个直角坐标系中，每个系列对应到 dataset 的每一行。
+                        { type: 'line', seriesLayoutBy: 'row', xAxisIndex: 0, yAxisIndex: 0, smooth: true},
+                        { type: 'line', seriesLayoutBy: 'row', xAxisIndex: 0, yAxisIndex: 0, smooth: true},
+                        { type: 'line', seriesLayoutBy: 'row', xAxisIndex: 0, yAxisIndex: 0, smooth: true},
+                        // 这几个系列会出现在第二个直角坐标系中，每个系列对应到 dataset 的每一列。
+                        { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+                        { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+                        { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 },
+                        { type: 'bar', xAxisIndex: 1, yAxisIndex: 1 }
+                ]
+            };
+
+            myChart3.setOption(option)
+
+        </script>
+
+        <div id="main4" style="width:100%;height:400px"></div>
+        <script type="text/javascript">
+            var myChart4 = echarts.init(document.getElementById('main4'),'dark');
+                
+            window.onresize = function() {
+                myChart4.resize();   
+            }
+
+            var option = {
+                dataset:{
+                    source:[
+                        ['score','amount','product'],
+                        [89.3, 58212, 'Matcha Latte'],
+                        [57.1, 78254, 'Milk Tea'],
+                        [74.4, 41032, 'Cheese Cocoa'],
+                        [50.1, 12755, 'Cheese Brownie'],
+                        [89.7, 20145, 'Matcha Cocoa'],
+                        [68.1, 79146, 'Tea'],
+                        [19.6, 91852, 'Orange Juice'],
+                        [10.6, 101852, 'Lemon Juice'],
+                        [32.7, 20112, 'Walnut Brownie']
+                    ]
+                },
+                // 需要把 tooltip:{} 写出来才会有tooltip
+                tooltip:{},
+                legend:{},
+
+                xAxis:{type:"category"},
+                yAxis:[{},{}],
+                series:[
+                    {
+                        type:'bar',
+                        xAxisIndex:0,
+                        yAxisIndex:0,
+                        encode:{
+                            x:"product",
+                            y:"amount",
+                            tooltip: ['product', 'amount']
+                        }
+                    },
+                    {
+                        type:'bar',
+                        xAxisIndex:0,
+                        yAxisIndex:1,
+                        encode:{
+                            x:"product",
+                            y:"score",
+                            tooltip: ['product', 'score']
+                        }
+                    }
+                ]
+            };
+
+            myChart4.setOption(option)
+
+        </script>
+
+        <div id="main5" style="width: 100%;height:400px"></div>
+        <script type="text/javascript">
+            var myChart5 = echarts.init(document.getElementById('main5'),'dark');
+                
+            window.onresize = function() {
+                myChart5.resize();   
+            }
+
+            var option = {
+                dataset: {
+                    dimensions:['a','b','c','id'],
+                    source: [
+                        [12, 323, 11.2,'a1'],
+                        [23, 167, 8.3,'a2'],
+                        [81, 284, 12,'a3'],
+                        [91, 413, 4.1,'a4'],
+                        [13, 287, 13.5,'a5']
+                    ]
+                },
+                visualMap: {
+                    show: true,
+                    dimension: 'b', // 指向第三列（列序号从 0 开始记，所以设置为 2）。
+                    min: 150, // 需要给出数值范围，最小数值。
+                    max: 450, // 需要给出数值范围，最大数值。
+                    inRange: {
+                    // 气泡尺寸：5 像素到 60 像素。
+                    symbolSize: [5, 60]
+                    }
+                },
+                tooltip:{},
+                xAxis: {},
+                yAxis: {},
+                series: {
+                    type: 'scatter',
+                    symbolSize: ['b'],
+                    encode:{
+                        x:1,
+                        y:0,
+                    }
+                }
+            };
+
+            option && myChart5.setOption(option);
+        </script>
+    </body>
+</html>
