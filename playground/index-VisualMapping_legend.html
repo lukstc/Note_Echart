@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <script src="echarts.js"></script>
+    </head>
+    <body>
+        <div id="main1" style="width: 100%; height: 400px;"></div>
+        <script type="text/javascript">
+            var chartDom = document.getElementById('main1');
+            var myChart1 = echarts.init(chartDom,'dark');
+
+            window.addEventListener(
+                'resize',
+                function() {
+                    myChart1.resize();
+                }
+            )
+
+            var option;
+
+            option = {
+                dataset:{
+                    dimensions:["lll","sss","ppp"],
+                    source:[
+                        [5,5.3,56],
+                        [2,6.3,67],
+                        [3,3.9,89],
+                        [2,3.7,82],
+                        [1,4.3,99],
+
+                        [4,4.1,49],
+                        [4,4.5,49],
+                        [5,5.4,59],
+                        [5,4.3,42],
+                        [5,5.3,56],
+                        [6,6.3,67],
+                        [7,7.9,89],
+                        [8,8.7,82],
+                        [9,9.3,99],
+
+                        [4,6.1,49],
+                        [4,3.5,49],
+                        [5,2.4,59],
+                        [5,7.3,42],
+                    ]
+                },
+                yAxis:{
+                    type:'value',
+                },
+                xAxis:{
+                    type:'value',
+                },
+
+                tooltip:{
+                    trigger:'item',
+                },
+
+                visualMap: [
+                    {
+                        show: true,
+                        calculable:true,
+                        align:'auto',
+                        dimension: 'ppp', // 指向第三列（列序号从 0 开始记，所以设置为 2）。
+                        min: 50, // 需要给出数值范围，最小数值。
+                        max: 100, // 需要给出数值范围，最大数值。
+                        inRange: {
+                        // 气泡尺寸：5 像素到 60 像素。
+                            symbolSize: [25, 75]
+                        },
+                        left: '5%',
+                        top: 'center',
+                        itemHeight:200,
+                    },
+                    {
+                        show: true,
+                        calculable:true,
+                        align:'auto',
+                        dimension: 'ppp', // 指向第三列（列序号从 0 开始记，所以设置为 2）。
+                        min: 50, // 需要给出数值范围，最小数值。
+                        max: 100, // 需要给出数值范围，最大数值。
+                        right: 'center',
+                        top: 'bottom',
+                        orient:'horizontal',
+                        indicatorSize:"50%",
+                        text: ['High', 'Low'],
+                        itemWidth:20,
+                        itemHeight:1000,
+                        inRange: {
+                        // 气泡尺寸：5 像素到 60 像素。
+                            color: ['yellow', 'red']
+                        }
+                    }
+                ],
+
+                series:[
+                    {
+                        type:"scatter",
+                        datasetIndex:0,
+                        symbolSize:'ppp',
+                        encode:{
+                            x:'lll',
+                            y:'sss',
+                            tooltip: ['lll', 'sss','ppp']
+                        },
+                    }
+                ],
+            };
+
+            option && myChart1.setOption(option);
+        </script>
+
+        <div id="main2" style="width:100%;height:500px"></div>
+        <script type="text/javascript">
+            
+            var chartDom = document.getElementById("main2");
+            var myChart2 = echarts.init(chartDom,'dark');
+
+            window.addEventListener(
+                'resize',
+                function() {
+                    myChart2.resize();
+                }
+            );
+
+            var option;
+            option={
+                legend:{
+                    type:'scroll',
+                    orient:'vertical',
+                    right:10,
+                    top:'center',
+                },
+                dataset:{
+                    source:[
+                        ['product', '2012', '2013', '2014', '2015', '2016', '2017'],
+                        ['Milk Tea', 56.5, 82.1, 88.7, 70.1, 53.4, 85.1],
+                        ['Matcha Latte', 51.1, 51.4, 55.1, 53.3, 73.8, 68.7],
+                        ['Cheese Cocoa', 40.1, 62.2, 69.5, 36.4, 45.2, 32.5],
+                        ['Walnut Brownie', 25.2, 37.1, 41.2, 18, 33.9, 49.1],
+                    ]
+                },
+                xAxis: {
+                    type: 'category',
+                },
+                yAxis: {},
+                series:[
+                    {type:'line',seriesLayoutBy: 'row'},
+                    {type:'line',seriesLayoutBy: 'row'},
+                    {type:'line',seriesLayoutBy: 'row'},
+                    {type:'line',seriesLayoutBy: 'row'},
+                    {type:'line',seriesLayoutBy: 'row'},
+                    {type:'line',seriesLayoutBy: 'row'},
+                ]
+            };
+
+            option && myChart2.setOption(option);
+
+        </script>
+    </body>
+</html>
