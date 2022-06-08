@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8"><meta/>
+        <script src='echarts.js'></script>
+    </head>
+
+    <body>
+        <div id="main1" style="width:100%;height:400px"></div>
+        <script type="text/javascript">
+            var chartDom = document.getElementById('main1');
+            var myChart1 = echarts.init(chartDom,'dark');
+            
+            window.addEventListener(
+                'resize',
+                function() {
+                    myChart1.resize();
+                }
+            );
+
+            // window.addEventListener(
+            //     'click',
+            //     function() {
+            //         console.log("click on window");
+            //     }
+            // );
+
+            var option;
+            option={
+                xAxis:{
+                    data: [
+                        'Shirt',
+                        'Wool sweater',
+                        'Chiffon shirt',
+                        'Pants',
+                        'High-heeled shoes',
+                        'socks'
+                    ]
+                },
+                yAxis:{},
+                series:[
+                    {
+                        name:"Sales",
+                        type:"bar",
+                        data:[5,20,36,10,10,20]
+                    }
+                ]
+            };
+
+            option&&myChart1.setOption(option);
+
+            myChart1.on(
+                'click',
+                function(params) {
+                    console.log("click on myChart1");
+                    console.log("click on myChart1 --> " + params.name);
+                    console.log(params);
+                    var params_name = params.name;
+                    console.log(`'Param Name': ${params_name}`);
+                    console.log("'Param Type': " + params.type);
+                    console.log('Opening --> https://www.google.com/search?q=' + encodeURIComponent(params.name));
+                    window.open('https://www.google.com/search?q=' + encodeURIComponent(params.name));
+                }
+            );
+
+            myChart1.on(
+                'click',
+                function(params) {
+                    if (params.componentType === 'markPoint') {
+                            // Clicked on the markPoint
+                        if (params.seriesIndex === 5) {
+                            // clicked on the markPoint of the series with index = 5
+                        }
+                    } else if (params.componentType === 'series') {
+                        if (params.seriesType === 'graph') {
+                            if (params.dataType === 'edge') {
+                                // clicked at the edge of graph.
+                            } else {
+                                // clicked at the node of graph.
+                            }
+                        }
+                    }
+                }
+            );
+
+            myChart1.on('click', 'series', function (params) {console.log(params.name)});
+            myChart1.on('click', 'series.line', function (params) {params.name});
+            myChart1.on('click', 'dataZoom', function (params) {params.name});
+            myChart1.on('click', 'xAxis.category', function (params) {params.name});
+            
+            myChart1.on('mouseover', { seriesIndex: 0, name: 'Wool sweater' }, function() {
+                // when data named 'xx' in series index 1 triggered 'mouseover'.
+                console.log('mouseover: Wool sweater ...')
+            });
+        </script>
+
+        <div id="main2" style="width:100%;height:400px"></div>
+        <script type="text/javascript">
+            var chartDom = document.getElementById('main2');
+            var myChart2= echarts.init(chartDom,'dark');
+            
+            window.addEventListener(
+                'resize',
+                function() {
+                    myChart2.resize();
+                }
+            );
+
+            var option;
+
+            option={
+                tooltip:{
+                    trigger:"item",
+                    formatter:"{a} <br/>{b}:{c} ({d})%",
+                },
+                legend:{
+                    orient:"vertical",
+                    left:"left",
+                    data:[
+                        'Direct Access',
+                        'Email Marketing',
+                        'Affiliate Ads',
+                        'Video Ads',
+                        'Search Engines'
+                    ],
+                },
+                series:[
+                    {
+                        name:"Access Source",
+                        type:"pie",
+                        radius:"55%",
+                        center:["50%","50%"],
+                        data:[
+                            { value: 335, name: 'Direct Access' },
+                            { value: 310, name: 'Email Marketing' },
+                            { value: 234, name: 'Affiliate Ads' },
+                            { value: 135, name: 'Video Ads' },
+                            { value: 1548, name: 'Search Engines' }
+                        ],
+                        emphasis:{
+                            itemStyle:{
+                                shadowBlur:10,
+                                shadowOffsetX:10,
+                                shadowColor:"rgba(0,0,0,0.5)",
+                            }
+                        }
+                    },
+                ],
+            };
+
+            let currentIndex = -1;
+            let counter = 0;
+
+            setInterval(
+                function() {
+                    counter += 1;
+
+                    var dataLen = option.series[0].data.length;
+                    // dataLen = 5
+                    
+                    myChart2.dispatchAction({
+                        type: 'downplay',
+                        seriesIndex: 0,
+                        dataIndex: currentIndex
+                    });
+                    
+                    currentIndex = (currentIndex + 1) % dataLen;
+                    
+                    if (counter <= 20) {
+                        console.log(`'counter' value -> ${counter}; 'CurrentIndex' value -> ${currentIndex}`);
+                    }
+
+                    myChart2.dispatchAction({
+                        type: 'highlight',
+                        seriesIndex: 0,
+                        dataIndex: currentIndex
+                    });
+
+                    myChart2.dispatchAction({
+                        type: 'showTip',
+                        seriesIndex: 0,
+                        dataIndex: currentIndex
+                    });
+                },
+                1000
+            );
+
+            myChart2.getZr().on('click', function(event) {
+                // No "target" means that mouse/pointer is not on any of the graphic elements, which is "blank".
+                if (!event.target) {
+                    // Click on blank. Do something.
+                    console.log('Clicked on myChar2 blank area ...')
+                }
+            });
+
+            option&&myChart2.setOption(option);
+        </script>
+    </body>
+</html>
