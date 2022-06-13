@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <!-- Include the ECharts file you just downloaded -->
+        <script src="echarts.js"></script>
+    </head>
+    <body>
+        <div id="main1" style="width: 100%;height: 400px"></div>
+        <script type="text/javascript">
+            var charDom = document.getElementById("main1");
+            var myChart1 = echarts.init(charDom, "dark");
+
+            window.addEventListener(
+                "resize",
+                function() {
+                    myChart1.resize();
+                }
+            );
+            var option;
+            option = {
+                xAxis:{
+                    type:"category",
+                    data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis:{
+                    type:"value",
+                },
+                series:[
+                    {
+                        type:"bar",
+                        data:[23, 24, 18, 25, 27, 28, 25],
+                        showBackground: true,
+                        backgroundStyle: {
+                            color: 'rgba(220, 220, 220, 0.2)'
+                        }
+                    },
+                    {
+                        type:"bar",
+                        data:[26, 24, 18, 22, 23, 20, 27],
+                        showBackground: true,
+                        backgroundStyle: {
+                            color: 'rgba(220, 220, 220, 0.2)'
+                        }
+                    },
+                    {
+                        type:"bar",
+                        data:[23, 24, 18, 25, 27, 28, 25],
+                        stack:"x"
+                    },
+                    {
+                        type:"bar",
+                        data:[26, 24, 18, 22, 23, 20, 27],
+                        stack:"x"
+                    },
+                ]
+            };
+
+            option&&myChart1.setOption(option);
+
+        </script>
+
+        <div id="main2" style="width: 100%;height: 400px"></div>
+        <script type="text/javascript">
+            var charDom = document.getElementById("main2");
+            var myChart2 = echarts.init(charDom, "dark");
+
+            window.addEventListener(
+                "resize",
+                function() {
+                    myChart2.resize();
+                }
+            );
+            var option2;
+
+            var data = [];
+            for (let i = 0; i < 5; ++i) {
+                data.push(Math.round(Math.random() * 200));
+            }
+
+            option2 = {
+                xAxis: {
+                    max: 'dataMax'
+                },
+                yAxis: {
+                    type: 'category',
+                    data: ['A', 'B', 'C', 'D', 'E'],
+                    inverse: true,
+                    animationDuration: 300,
+                    animationDurationUpdate: 300,
+                    max: 2 // only the largest 3 bars will be displayed
+                },
+                series: [
+                    {
+                    realtimeSort: true,
+                    name: 'X',
+                    type: 'bar',
+                    data: data,
+                    label: {
+                        show: true,
+                        position: 'right',
+                        valueAnimation: true
+                    }
+                    }
+                ],
+                legend: {
+                    show: true
+                },
+                animationDuration: 0,
+                animationDurationUpdate: 3000,
+                animationEasing: 'linear',
+                animationEasingUpdate: 'linear'
+            };
+
+            function run() {
+                var data = option2.series[0].data;
+                for (var i = 0; i < data.length; ++i) {
+                    if (Math.random() > 0.9) {
+                    data[i] = Math.round(Math.random() * 200);
+                    } else {
+                    data[i] = Math.round(Math.random() * 100);
+                    }
+                }
+                
+                option2&&myChart2.setOption(option2);
+            }
+
+            setTimeout(function() {run();}, 0);
+            setInterval(function() {run();}, 3000);
+
+
+        </script>
+
+        <div id="main3" style="width: 100%;height: 600px"></div>
+        <script type="text/javascript">
+            var charDom = document.getElementById("main3");
+            var myChart3 = echarts.init(charDom, "dark");
+
+            window.addEventListener(
+                "resize",
+                function() {
+                    myChart3.resize();
+                }
+            );
+            var option;
+
+            option = {
+                title:{
+                    text:"Accumulated Waterfull Chart, there are multiple ways to make waterfull chart ...",
+                },
+                tooltip:{
+                    trigger:'axis',
+                    axisPointer:{
+                        type:"shadow"
+                    },
+                },
+                legend: {
+                    data: ['Expenses', 'Income']
+                },
+                grid:{
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: (function () {
+                        let list = [];
+                        for (let i = 1; i <= 11; i++) {
+                            list.push('Nov ' + i);
+                        }
+                        return list;
+                    })()
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [
+                    {
+                        name: 'Placeholder',
+                        type: 'bar',
+                        stack: 'Total',
+                        itemStyle: {
+                            borderColor: 'transparent',
+                            color: 'transparent'
+                        },
+                        emphasis: {
+                            itemStyle: {
+                                borderColor: 'transparent',
+                                color: 'transparent'
+                            }
+                        },
+                        data: [0, 900, 1245, 1530, 1376, 1376, 1511, 1689, 1856, 1495, 1292]
+                    },
+                    {
+                        name: 'Income',
+                        type: 'bar',
+                        stack: 'Total',
+                        label: {
+                            show: true,
+                            position: 'top'
+                        },
+                        data: [900, 345, 393, '-', '-', 135, 178, 286, '-', '-', '-']
+                    },
+                    {
+                        name: 'Expenses',
+                        type: 'bar',
+                        stack: 'Total',
+                        label: {
+                            show: true,
+                            position: 'bottom'
+                        },
+                        data: ['-', '-', '-', 108, 154, '-', '-', '-', 119, 361, 203]
+                    }
+                ]
+            };
+            myChart3.setOption(option);
+        </script>
+
+        <div id="main4" style="width: 100%;height: 600px"></div>
+        <script type="text/javascript">
+            var charDom = document.getElementById("main4");
+            var myChart4 = echarts.init(charDom, "dark");
+
+            window.addEventListener(
+                "resize",
+                function() {
+                    myChart4.resize();
+                }
+            );
+            var option;
+
+            option={
+                legend:{},
+                tooltip:{
+                    trigger:"axis"
+                },
+                xAxis:{
+                    type:"category",
+                    data:["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
+                },
+                yAxis:{
+                    type:"value"
+                },
+                series:[
+                    {
+                        name: 'Step Start',
+                        type: 'line',
+                        step: 'start',
+                        data: [120, 132, 101, 134, 90, 230, 210]
+                    },
+                    {
+                        name: 'Step Middle',
+                        type: 'line',
+                        step: 'middle',
+                        data: [220, 282, 201, 234, 290, 430, 410]
+                    },
+                    {
+                        name: 'Step End',
+                        type: 'line',
+                        step: 'end',
+                        data: [450, 432, 401, 454, 590, 530, 510]
+                    },
+                    {
+                        name: 'Smooth-Line',
+                        type: 'line',
+                        smooth:true,
+                        data: [45, 43, 40, 45, 59, 53, 51],
+                        areaStyle:{
+                            color: 'red',
+                            opacity: 0.2
+                        }
+                    },
+                    {
+                        name: 'stackline#1',
+                        type: 'line',
+                        smooth:true,
+                        stack: 'total',
+                        data: [600, 610, 620, 630, 640, 610, 620],
+                        areaStyle:{
+                            color: 'orange',
+                            opacity: 0.1
+                        },
+                    },
+                    {
+                        name: 'stackline#2',
+                        type: 'line',
+                        smooth:true,
+                        stack: 'total',
+                        areaStyle:{
+                            color: 'green',
+                            opacity: 0.8
+                        },
+                        data: [10,20,30,24,35,26,90],
+                    },
+                ]
+            };
+
+            option&&myChart4.setOption(option);
+
+        </script>
+        
+        <div id="main5" style="width: 100%;height: 400px"></div>
+        <script type="text/javascript">
+            charDom = document.getElementById("main5");
+            myChart5= echarts.init(charDom,"dark");
+
+            window.addEventListener(
+                "resize",
+                function() {
+                    myChart5.resize();
+                }
+            );
+            option = {
+                series: [
+                    {
+                        type: 'pie',
+                        center: ['20%', '50%'],
+                        data: [
+                            {value: 232, name: 'A'},
+                            {value: 200, name: 'B'},
+                            {value: 312, name: 'C'},
+                            {value: 233, name: 'D'},
+                            {value: 108, name: 'E'}
+                        ],
+                    },
+                    {
+                        type: 'pie',
+                        center: ['50%', '50%'],
+                        data: [
+                            {value: 232, name: 'A'},
+                            {value: 200, name: 'B'},
+                            {value: 312, name: 'C'},
+                            {value: 233, name: 'D'},
+                            {value: 108, name: 'E'}
+                        ],
+                        roseType: 'area'
+                    },
+                    {
+                        type: 'pie',
+                        radius:["20%","80%"],
+                        center: ['80%', '50%'],
+                        data: [
+                            {value: 232, name: 'A'},
+                            {value: 200, name: 'B'},
+                            {value: 312, name: 'C'},
+                            {value: 233, name: 'D'},
+                            {value: 108, name: 'E'}
+                        ],
+                    }
+
+                ]
+            };
+
+            option&&myChart5.setOption(option);
+        </script>
+
+        <div id="main6" style="width: 100%; height: 400px;"></div>
+        <script type="text/javascript">
+            chartDom = document.getElementById("main6");
+            myChart6 = echarts.init(chartDom,"dark");
+
+            option = {
+                xAxis: {
+                    data: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+                },
+                yAxis: {
+                    //min:"dataMin"
+                    min:150,
+                    max:350,
+                },
+                series: [
+                    {
+                        type: 'scatter',
+                        data: [220, 182, 191, 234, 290, 330, 310],
+                        symbolSize: function(value) {
+                            return value / 3;
+                        },
+                        itemStyle:{
+                            color:"orange",
+                            borderColor:"red",
+                            borderWidth:2,
+                            borderBlue:20,
+                            opacity:0.9
+                        }
+                    }
+                ]
+            };
+
+            option&&myChart6.setOption(option);
+
+        </script>
+    </body>
+</html>
